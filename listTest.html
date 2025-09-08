@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>CSS Only Book Grid & Sort</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; margin: 24px; }
+
+  .wrap { max-width: 900px; }
+
+  /* 기본값: 3칸, 오름차순 */
+  .books {
+    --cols: 3;
+    --order-prop: var(--asc);
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  }
+
+  .book {
+    order: var(--order-prop);           /* 여기서 정렬 */
+    border: 1px solid #ddd; border-radius: 10px; padding: 12px;
+    background: #fff; display: flex; gap: 10px; align-items: center;
+  }
+  .thumb { width: 56px; height: 72px; background:#eee; border-radius: 6px; flex: none; }
+  .meta b { display:block; font-size:14px; }
+  .meta small { color:#666; }
+
+  /* 컨트롤 UI */
+  .controls { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  #cols { width: 7ch; padding: 6px 8px; border:1px solid #ccc; border-radius:8px; }
+  #asc { position: absolute; left: -9999px; } /* 진짜 체크박스는 숨기고 라벨로 토글 */
+  .sortLabel { cursor: pointer; padding: 6px 10px; border:1px solid #ccc; border-radius: 8px; }
+  /* true/false 라벨 토글 */
+  .sortLabel::after { content: "오름차순 (true)"; }
+  #asc:not(:checked) + .sortLabel::after { content: "내림차순 (false)"; }
+
+
+
+
+
+  .sex:has(input:in-range:not(:placeholder-shown)) > ul {grid-template-columns: repeat(4, 1fr);} 
+  .sex:has(input:out-of-range:not(:placeholder-shown)) > ul {grid-template-columns: repeat(5, 1fr);} 
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- ⚠️ #cols, #asc 는 반드시 .books 앞에 있어야 함 (형제 관계 유지) -->
+    <div class="controls">
+      <label for="cols">한 줄 개수</label>
+      <!-- 아무 것도 안 쓰면 3 / 4 입력하면 4 / 5 입력하면 5 -->
+      <input id="cols" type="number" placeholder="3" min="5" max="5" step="1" required>
+
+      <!-- true/false 힌트: 체크=true(오름), 해제=false(내림) -->
+      <input id="asc" type="checkbox" checked>
+      <label class="sortLabel" for="asc"></label>
+    </div>
+
+    <div class="sex">
+      <input type="number" min="4" max="4" placeholder="3">
+      <ul class="books">
+        <li class="book" style="--asc: 20230315; --desc: -20230315;">
+          <div class="thumb"></div>
+          <div class="meta"><b>봄 여름 이야기</b><small>2023-03-15</small></div>
+        </li>
+        <li class="book" style="--asc: 20210105; --desc: -20210105;">
+          <div class="thumb"></div>
+          <div class="meta"><b>금붕어의 어항 일기</b><small>2021-01-05</small></div>
+        </li>
+        <li class="book" style="--asc: 20240719; --desc: -20240719;">
+          <div class="thumb"></div>
+          <div class="meta"><b>자동차 타는 여우</b><small>2024-07-19</small></div>
+        </li>
+        <li class="book" style="--asc: 20221102; --desc: -20221102%;">
+          <div class="thumb"></div>
+          <div class="meta"><b>기차를 타고 창 밖을 봐요</b><small>2022-11-02</small></div>
+        </li>
+        <li class="book" style="--asc: 20231201; --desc: -20231201;">
+          <div class="thumb"></div>
+          <div class="meta"><b>나를 찾아 줘!</b><small>2023-12-01</small></div>
+        </li>
+        <li class="book" style="--asc: 20200220; --desc: -20200220;">
+          <div class="thumb"></div>
+          <div class="meta"><b>고마워, 한글</b><small>2020-02-20</small></div>
+        </li>
+        <li class="book" style="--asc: 20210830; --desc: -20210830;">
+          <div class="thumb"></div>
+          <div class="meta"><b>버스 타고 지하철 타고 아빠에게 가요</b><small>2021-08-30</small></div>
+        </li>
+        <li class="book" style="--asc: 20191212; --desc: -20191212;">
+          <div class="thumb"></div>
+          <div class="meta"><b>별빛 도서관</b><small>2019-12-12</small></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

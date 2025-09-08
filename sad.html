@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .grid {
+      display: grid;
+      gap: 5px;
+    }
+
+    /* 입력값 없을 때 → 1개 */
+    input:placeholder-shown ~ .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* 값이 4 (범위 안) → 4개 */
+    input:in-range:not(:placeholder-shown) ~ .grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* 값이 5 (범위 밖) → 5개 */
+    input:out-of-range:not(:placeholder-shown) ~ .grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .grid div {
+      background: skyblue;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <input type="number" placeholder="0" min="4" max="4">
+    <div class="grid">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </form>
+</body>
+</html>
